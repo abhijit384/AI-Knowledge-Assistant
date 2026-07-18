@@ -15,7 +15,8 @@ MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 
 UPLOAD_FOLDER = "uploads"
 
-CHROMA_PATH = "chroma_db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
 
 # ==========================
 # Chunk Settings
