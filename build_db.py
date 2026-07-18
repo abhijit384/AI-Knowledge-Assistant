@@ -1,6 +1,7 @@
 import shutil
 import os
 
+import chromadb
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_mistralai import MistralAIEmbeddings
 from langchain_chroma import Chroma
@@ -77,6 +78,15 @@ def build_database(urls=None):
     if os.path.exists(CHROMA_PATH):
       shutil.rmtree(CHROMA_PATH, ignore_errors=True)
 
+    # Chroma caches a "system client" per persist_directory for the life of
+    # the process. Since Streamlit keeps this process alive across reruns,
+    # any earlier Chroma(...) call (e.g. from rag.py answering a question)
+    # leaves a stale client pointing at the files we just deleted above.
+    # Clear that cache so the next Chroma call opens a brand-new connection
+    # instead of reusing the stale one - this is what causes the
+    # "attempt to write a readonly database" error.
+    chromadb.api.client.SharedSystemClient.clear_system_cache()
+
     # -------------------------
     # Create Database
     # -------------------------
@@ -86,6 +96,11 @@ def build_database(urls=None):
         embedding=embedding_model,
         persist_directory=CHROMA_PATH
     )
+
+    # Clear again so that after building, rag.py's get_retriever() also
+    # opens a fresh client against the newly-built DB rather than any
+    # cached reference from the build step itself.
+    chromadb.api.client.SharedSystemClient.clear_system_cache()
 
     print("Database created successfully.")
 
