@@ -24,7 +24,6 @@ langchain-community
 langchain-mistralai
 python-dotenv
 unstructured
-pypdfz
 pypdf
 unstructured
 beautifulsoup4
