@@ -80,7 +80,7 @@ def build_database(urls=None):
     # -------------------------
     # Create Database
     # -------------------------
-
+    os.makedirs(CHROMA_PATH, exist_ok=True)
     Chroma.from_documents(
         documents=chunks,
         embedding=embedding_model,
