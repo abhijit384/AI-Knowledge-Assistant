@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import tempfile
 
 load_dotenv()
 
@@ -15,8 +16,16 @@ MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 
 UPLOAD_FOLDER = "uploads"
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
+
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+
+CHROMA_PATH = os.path.join(tempfile.gettempdir(), "chroma_db")
+
+EMBEDDING_MODEL = "mistral-embed"
+LLM_MODEL = "mistral-small-latest"
+
+TOP_K = 4
+FETCH_K = 10
 
 # ==========================
 # Chunk Settings
