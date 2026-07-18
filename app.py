@@ -3,7 +3,7 @@ import shutil
 import streamlit as st
 
 from build_db import build_database
-from config import UPLOAD_FOLDER
+from config import UPLOAD_FOLDER, CHROMA_PATH
 from rag import ask_question
 
 # ===============================
@@ -155,7 +155,7 @@ col1.metric(
 col2.metric(
     "Vector DB",
     "Ready"
-    if os.path.exists("chroma_db")
+    if os.path.exists(CHROMA_PATH) and os.listdir(CHROMA_PATH)
     else "Not Built"
 )
 
