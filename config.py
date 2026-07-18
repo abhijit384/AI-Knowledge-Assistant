@@ -17,8 +17,6 @@ MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 UPLOAD_FOLDER = "uploads"
 
 
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-
 CHROMA_PATH = os.path.join(tempfile.gettempdir(), "chroma_db")
 
 EMBEDDING_MODEL = "mistral-embed"
